@@ -23,6 +23,11 @@ class App extends Component {
     console.log("componentDidMount");
   }
 
+  componentDidUpdate(){
+    console.log("componentDidUpdate");
+
+  }
+
   nameChangedHandler = (event, index) => {
     const persons = [...this.state.persons]
     persons[index].name = event.target.value

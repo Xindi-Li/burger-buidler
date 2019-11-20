@@ -3,6 +3,14 @@ import Person from "./Person/Person"
 
 class Persons extends React.Component {
 
+    componentDidMount(){
+        console.log("didMount");
+    }
+
+    componentDidUpdate(){
+        console.log("didUpdate")
+    }
+
     render() {
         return this.props.persons.map((person, index) =>
             <Person
