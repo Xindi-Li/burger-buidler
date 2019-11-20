@@ -1,6 +1,9 @@
-import React from "react";
+import React, {useEffect} from "react";
 
 const cockpit = (props) => {
+  useEffect(()=>{
+    
+  })
     const classes = [];
     if (props.state.persons.length <= 2) {
       classes.push("red");

@@ -4,13 +4,23 @@ import Persons from '../components/Persons/Persons';
 import Radium from "radium";
 
 class App extends Component {
-  state = {
-    persons: [
-      { "id": "asdfd", name: "Max", age: 28 },
-      { "id": "ascvd", name: "James", age: 25 },
-      { "id": "asssd", name: "James", age: 25 }
-    ],
-    showPersons: false
+  constructor(props){
+    super(props);
+    this.state = {
+      persons: [
+        { "id": "asdfd", name: "Max", age: 28 },
+        { "id": "ascvd", name: "James", age: 25 },
+        { "id": "asssd", name: "James", age: 25 }
+      ],
+      showPersons: false
+    }
+  }
+  static genDerivedStateFromProps(props, state){
+    return state;
+  }
+
+  componentDidMount(){
+    console.log("componentDidMount");
   }
 
   nameChangedHandler = (event, index) => {
@@ -35,31 +45,19 @@ class App extends Component {
     )
   }
 
-
-
   render() {
-    const style = {
-      backgroundColor: "green",
-      color: "white",
-      font: "inherit",
-      border: "1px sold blue",
-      ":hover": {
-        backgroundColor:"lightgreen",
-        
-      }
-    }
-
     let persons = null;
+    let btnClass = '';
     if (this.state.showPersons) {
       persons = (
         <div>
-            <Persons
+          <Persons
             persons={this.state.persons}
             clicked={this.deletePersonHandler}
-            changed={this.nameChangedHandler}/>
+            changed={this.nameChangedHandler} />
         </div>
       )
-      style.backgroundColor = "red";
+      btnClass = classes.Red
     }
     const assignedClasses = [];
     if (this.state.persons.length <= 2) {
@@ -72,8 +70,10 @@ class App extends Component {
     return (
       <div className={classes.App}>
         <div>
-            <p className={assignedClasses.join(' ')}>Hi, I'm a React App</p>
-            <button style={style} onClick={this.togglePersonHandler}>Toggle persons</button>
+          <p className={assignedClasses.join(' ')}>Hi, I'm a React App</p>
+          <button
+            className={btnClass}
+            onClick={this.togglePersonHandler}>Toggle persons</button>
         </div>
         {persons}
       </div>
