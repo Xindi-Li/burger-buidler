@@ -19,7 +19,8 @@ class ContactData extends Component {
 				validation: {
 					required: true
 				},
-				valid: false
+				valid: false,
+				touched: false
 			},
 			street: {
 				elementType: "input",
@@ -31,7 +32,8 @@ class ContactData extends Component {
 				validation: {
 					required: true
 				},
-				valid: false
+				valid: false,
+				touched: false
 			},
 			zipCode: {
 				elementType: "input",
@@ -45,7 +47,8 @@ class ContactData extends Component {
 					minLength: 5,
 					maxLength: 5
 				},
-				valid: false
+				valid: false,
+				touched: false
 			},
 			country: {
 				elementType: "input",
@@ -57,7 +60,8 @@ class ContactData extends Component {
 				validation: {
 					required: true
 				},
-				valid: false
+				valid: false,
+				touched: false
 			},
 			email: {
 				elementType: "input",
@@ -69,7 +73,8 @@ class ContactData extends Component {
 				validation: {
 					required: true
 				},
-				valid: false
+				valid: false,
+				touched: false
 			},
 			deliveryMethod: {
 				elementType: "select",
@@ -112,9 +117,10 @@ class ContactData extends Component {
 		const order = {
 			ingredients: this.props.ings,
 			price: this.props.price,
-			orderData: formData
+			orderData: formData,
+			userId: this.props.userId
 		};
-		this.props.onOrderBurger(order);
+		this.props.onOrderBurger(order, this.props.token);
 	};
 
 	inputChangedHandler = (e, inputId) => {
@@ -125,6 +131,7 @@ class ContactData extends Component {
 			...updatedOrderForm[inputId]
 		};
 		updatedFormElement["value"] = e.target.value;
+		updatedFormElement["touched"] = true;
 		updatedFormElement["valid"] = this.checkValidity(
 			updatedFormElement["value"],
 			updatedFormElement["validation"]
@@ -139,22 +146,23 @@ class ContactData extends Component {
 	};
 
 	render() {
-		const fromElementsArray = [];
+		const formElementsArray = [];
 		for (let key in this.state.orderForm) {
-			fromElementsArray.push({
+			formElementsArray.push({
 				id: key,
 				config: this.state.orderForm[key]
 			});
 		}
 		let form = (
 			<form onSubmit={this.orderHandler}>
-				{fromElementsArray.map(e => (
+				{formElementsArray.map(e => (
 					<Input
 						key={e.id}
 						elementType={e.config.elementType}
 						elementConfig={e.config.elementConfig}
 						value={e.config.value}
 						invalid={!e.config.valid}
+						touched={e.config.touched}
 						changed={event => this.inputChangedHandler(event, e.id)}
 					/>
 				))}
@@ -179,13 +187,16 @@ const mapStateToProps = state => {
 	return {
 		ings: state.burgerBuilder.ingredients,
 		price: state.burgerBuilder.totalPrice,
-		loading: state.order.loading
+		loading: state.order.loading,
+		token: state.auth.token,
+		userId: state.auth.userId
 	};
 };
 
 const mapDispatchToProps = distpatch => {
 	return {
-		onOrderBurger: orderData => distpatch(actions.purchaseBurger(orderData))
+		onOrderBurger: (orderData, token) =>
+			distpatch(actions.purchaseBurger(orderData, token))
 	};
 };
 
