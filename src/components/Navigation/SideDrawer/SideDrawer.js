@@ -13,7 +13,7 @@ const sideDrawer = props => {
 	return (
 		<React.Fragment>
 			<Backdrop show={props.open} clicked={props.closed} />
-			<div className={attchedCLasses.join(" ")}>
+			<div className={attchedCLasses.join(" ")} onClick={props.closed}>
 				<div className={styles.Logo}>
 					<Logo />
 				</div>
