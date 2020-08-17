@@ -3,17 +3,17 @@ import styles from "./NavigationItems.module.css";
 import NavigationItem from "./NavigationItem/NavigationItem";
 
 const navigationItems = props => (
-	<ul className={styles.NavigationItems}>
-		<NavigationItem link="/">Burger Builder</NavigationItem>
-		{props.isAuth ? (
-			<NavigationItem link="/orders">Orders</NavigationItem>
-		) : null}
-		{!props.isAuth ? (
-			<NavigationItem link="/auth">Authenticate</NavigationItem>
-		) : (
-			<NavigationItem link="/logout">Logout</NavigationItem>
-		)}
-	</ul>
+  <ul className={styles.NavigationItems}>
+    <NavigationItem link="/">Burger Builder</NavigationItem>
+    {props.isAuth ? (
+      <NavigationItem link="/orders">Orders</NavigationItem>
+    ) : null}
+    {!props.isAuth ? (
+      <NavigationItem link="/auth">Authenticate</NavigationItem>
+    ) : (
+      <NavigationItem link="/logout">Logout</NavigationItem>
+    )}
+  </ul>
 );
 
 export default navigationItems;

@@ -7,13 +7,13 @@ import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 configure({ adapter: new Adapter() });
 
 describe("BurgerBuilder", () => {
-	let wrapper;
-	beforeEach(() => {
-		wrapper = shallow(<BurgerBuilder onInitIngredients={() => {}} price={0} />);
-	});
+  let wrapper;
+  beforeEach(() => {
+    wrapper = shallow(<BurgerBuilder onInitIngredients={() => {}} price={0} />);
+  });
 
-	it("should render BuildControls when receiving ingredients", () => {
-		wrapper.setProps({ ings: { salad: 0 } });
-		expect(wrapper.find(BuildControls)).toHaveLength(1);
-	});
+  it("should render BuildControls when receiving ingredients", () => {
+    wrapper.setProps({ ings: { salad: 0 } });
+    expect(wrapper.find(BuildControls)).toHaveLength(1);
+  });
 });
